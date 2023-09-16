@@ -7,9 +7,16 @@ public enum GamePhase
     NormalPhase
 }
 
+public enum DotType
+{
+    Standart,
+    TimeBomb
+}
+
 public enum ParticleType
 {
-    Blop
+    Blop,
+    Explode
 }
 
 

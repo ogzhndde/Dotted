@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: DotBase
+    uniqueID: 4072125263
+    locked: 0
+  - name: DotFrame
+    uniqueID: 2631141653
+    locked: 0

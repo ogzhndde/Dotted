@@ -7,10 +7,11 @@ using System.Linq;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameData data;
     
-    // [Header("Definitons")]
-
+    [Header("ScriptableObjects")]
+    public GameData data;
+    public DotSO DotData;
+    public ParticleSO ParticleData;
 
     void Awake()
     {

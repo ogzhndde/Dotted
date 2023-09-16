@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObject/GameData", order = 1)]
+[CreateAssetMenu(fileName = "GameData", menuName = "Data/GameData", order = 1)]
 public class GameData : ScriptableObject
 {
     [Header("Float & Int")]
