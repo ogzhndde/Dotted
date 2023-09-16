@@ -5,15 +5,18 @@ using UnityEngine;
 public class DotStandart : DotAbstract
 {
 
-    void Start()
+    private void OnEnable()
     {
+        lineRenderer = GetComponent<LineRenderer>();
         TargetMovePoint = transform.position;
 
-        InvokeRepeating(nameof(SetNewTarget), 0f, 0.2f);
+        Move();
     }
 
     private void Update()
     {
-        Move();
+        DrawLine();
+        SendLinecast();
     }
+
 }
