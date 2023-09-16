@@ -137,9 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babd9dd59b0d9fd4ba13e2085926bf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConnectedDots:
-  - {fileID: 0}
-  - {fileID: 0}
+  ConnectedDots: []
 --- !u!120 &871070762
 LineRenderer:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class DotStandart : DotAbstract
     private void Update()
     {
         DrawLine();
-        SendLinecast();
+        // SendRaycast();
     }
 
 }

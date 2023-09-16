@@ -43,6 +43,8 @@ namespace DotFactoryStatic
         public override void SpawnDot(DotType dotType, Vector2 spawnPosition)
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotStandart, spawnPosition, Quaternion.identity);
+
+            DotController.Instance.AllConnectedDots.Add(spawnedDot);
         }
     }
     

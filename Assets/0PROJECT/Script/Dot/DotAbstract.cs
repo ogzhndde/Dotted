@@ -46,29 +46,7 @@ public abstract class DotAbstract : MonoBehaviour
         lineRenderer.SetPositions(ConnectionPoints());
     }
 
-    protected virtual void SendLinecast()
-    {
-        Vector3[] connections = ConnectionPoints();
-
-        for (int i = 0; i < connections.Length; i++)
-        {
-            if (i % 2 == 1)
-                Linecast(connections[i - 1], connections[i]);
-        }
-    }
-    private void Linecast(Vector3 startPos, Vector3 endPos)
-    {
-        Debug.Log("sended linecast");
-        // Create a layer mask that excludes the "Dot" layer
-        int layerMask = ~LayerMask.GetMask("Dot");
-
-        RaycastHit hit;
-        if (Physics.Linecast(startPos, endPos, out hit, layerMask))
-        {
-            Debug.Log("Linecast intersected with object: " + hit.collider.gameObject.name);
-            Debug.Log("Intersection point: " + hit.point);
-        }
-    }
+    
 
     protected virtual void ExplodeDot()
     {
