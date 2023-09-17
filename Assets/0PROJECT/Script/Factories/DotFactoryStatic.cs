@@ -44,7 +44,7 @@ namespace DotFactoryStatic
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotStandart, spawnPosition, Quaternion.identity);
 
-            DotController.Instance.AllConnectedDots.Add(spawnedDot);
+            DotController.Instance.AllDotsInScene.Add(spawnedDot);
         }
     }
     

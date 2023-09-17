@@ -116,7 +116,7 @@ public class ObjectPool : MonoBehaviour
     //When an objects destroy, return it to the pool
     public static void ReturnObjectToPool(GameObject obj)
     {
-        string goName = obj.name.Substring(0, obj.name.Length - 7); //Cut the (Clone) part from name
+        string goName = obj.name.Contains("(Clone)") ? obj.name.Substring(0, obj.name.Length - 7) : obj.name; //Cut the (Clone) part from name
 
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
 

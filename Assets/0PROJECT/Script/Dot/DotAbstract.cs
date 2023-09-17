@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public abstract class DotAbstract : MonoBehaviour
 {
     public List<Transform> ConnectedDots = new List<Transform>();
     protected LineRenderer lineRenderer;
+    protected Animator anim;
     protected Vector2 TargetMovePoint;
 
     protected virtual void Move()
@@ -20,7 +22,7 @@ public abstract class DotAbstract : MonoBehaviour
 
     private void SetNewTarget()
     {
-        TargetMovePoint = DotController.Instance.GetRandomPointInFOV();
+        TargetMovePoint = DotSpawner.Instance.GetRandomPointInFOV();
     }
 
     float MoveSpeed()
@@ -34,9 +36,12 @@ public abstract class DotAbstract : MonoBehaviour
         List<Vector3> connectionArray = new List<Vector3>();
         for (int i = 0; i < ConnectedDots.Count; i++)
         {
+
             connectionArray.Add(transform.position);
             connectionArray.Add(ConnectedDots[i].position);
+
         }
+
         return connectionArray.ToArray();
     }
 
@@ -46,11 +51,11 @@ public abstract class DotAbstract : MonoBehaviour
         lineRenderer.SetPositions(ConnectionPoints());
     }
 
-    
+
 
     protected virtual void ExplodeDot()
     {
-
+        ObjectPool.ReturnObjectToPool(gameObject);
     }
 
     protected virtual void ResetDotProperties()

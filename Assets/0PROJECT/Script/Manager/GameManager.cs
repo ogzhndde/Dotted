@@ -23,17 +23,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-        // Vector3 intersection;
-
-        // bool isIntersect = Math3d.AreLinesIntersecting(out intersection, r1.position, r2.position, b1.position, b2.position);
-        // Debug.Log(isIntersect);
-
-        // h2.position = isIntersect ? intersection : Vector3.zero;
+        EventManager.Broadcast(GameEvent.OnStart);
     }
 
 
