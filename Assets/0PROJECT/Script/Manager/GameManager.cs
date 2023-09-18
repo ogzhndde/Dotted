@@ -7,7 +7,7 @@ using System.Linq;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Transform r1, r2, b1, b2, h2;
+    public bool _gameFail = false;
 
     [Header("ScriptableObjects")]
     public GameData data;
@@ -32,12 +32,24 @@ public class GameManager : Singleton<GameManager>
 
     private void OnEnable()
     {
-        // EventManager.AddHandler(GameEvent.OnStart, OnStart);
+         EventManager.AddHandler(GameEvent.OnStart, OnStart);
+         EventManager.AddHandler(GameEvent.OnFinish, OnFinish);
     }
 
     private void OnDisable()
     {
-        // EventManager.RemoveHandler(GameEvent.OnStart, OnStart);
+         EventManager.RemoveHandler(GameEvent.OnStart, OnStart);
+         EventManager.RemoveHandler(GameEvent.OnFinish, OnFinish);
     }
 
+    private void OnStart()
+    {
+        data.ResetData();
+    }
+
+
+    private void OnFinish()
+    {
+        _gameFail = true;
+    }
 }

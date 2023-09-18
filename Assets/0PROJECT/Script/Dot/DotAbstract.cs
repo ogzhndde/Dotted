@@ -7,28 +7,31 @@ using System.Linq;
 public abstract class DotAbstract : MonoBehaviour
 {
     public List<Transform> ConnectedDots = new List<Transform>();
+    protected SpriteRenderer spriteRenderer;
     protected LineRenderer lineRenderer;
     protected Animator anim;
     protected Vector2 TargetMovePoint;
+    protected float CurrentMoveSpeed;
 
     protected virtual void Move()
     {
-        transform.DOMove(TargetMovePoint, MoveSpeed()).SetEase(Ease.Linear).OnComplete(() =>
-        {
+        transform.position = Vector2.MoveTowards(transform.position, TargetMovePoint, Time.deltaTime * CurrentMoveSpeed);
+
+        if (Vector2.Distance(transform.position, TargetMovePoint) < 0.1f)
             SetNewTarget();
-            Move();
-        });
     }
 
     private void SetNewTarget()
     {
-        TargetMovePoint = DotSpawner.Instance.GetRandomPointInFOV();
+        TargetMovePoint = DotSpawner.GetRandomPointInFOV();
+        CurrentMoveSpeed = MoveSpeed();
     }
 
     float MoveSpeed()
     {
-        float speedByDistance = Vector2.Distance(transform.position, TargetMovePoint) * Random.Range(2f, 4f);
-        return speedByDistance;
+        GameData data = GameManager.Instance.data;
+        var speedByDistance = Random.Range(0.1f, 0.3f);
+        return speedByDistance /data.MultiplierByScore * data.DotSpeedMultiplier;
     }
 
     Vector3[] ConnectionPoints()
@@ -58,9 +61,10 @@ public abstract class DotAbstract : MonoBehaviour
         ObjectPool.ReturnObjectToPool(gameObject);
     }
 
-    protected virtual void ResetDotProperties()
+    public virtual void ResetDotProperties()
     {
-        DOTween.Clear();
-        TargetMovePoint = new Vector2(0, 0);
+        // DOTween.Kill(this.gameObject);
+        ConnectedDots.Clear();
+        lineRenderer.positionCount = 0;
     }
 }

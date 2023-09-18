@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f319133c54dbfe7498d689097b6a52fb, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  totalMoney: 0
-  deneme: 0
+  currentScore: 0
+  multiplierByScore: 1
+  dotSpeedMultiplier: 1
+  highScore: 935

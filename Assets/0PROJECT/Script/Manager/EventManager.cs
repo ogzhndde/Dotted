@@ -4,8 +4,10 @@ using System.Collections.Generic;
 public enum GameEvent
 {
     OnStart,
+    OnFinish,
     OnConnectDot,
     OnClosedConnection,
+    OnScore,
 
 
     //SOUND EVENTS

@@ -36,25 +36,27 @@ namespace DotFactoryStatic
     }
 
     //All necessary data for dots is drawn from scriptable objects and sent to the factory for production.
-    public class DotStandart: DotProperties
+    public class DotStandart : DotProperties
     {
         GameManager manager => GameManager.Instance;
 
         public override void SpawnDot(DotType dotType, Vector2 spawnPosition)
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotStandart, spawnPosition, Quaternion.identity);
-
+            spawnedDot.GetComponent<DotAbstract>().ResetDotProperties();
             DotController.Instance.AllDotsInScene.Add(spawnedDot);
         }
     }
-    
-    public class DotTimeBomb: DotProperties
+
+    public class DotTimeBomb : DotProperties
     {
         GameManager manager => GameManager.Instance;
 
         public override void SpawnDot(DotType dotType, Vector2 spawnPosition)
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotTimeBomb, spawnPosition, Quaternion.identity);
+            spawnedDot.GetComponent<DotAbstract>().ResetDotProperties();
+            DotController.Instance.AllDotsInScene.Add(spawnedDot);
         }
     }
 }

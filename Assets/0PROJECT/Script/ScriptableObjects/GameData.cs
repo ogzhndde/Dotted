@@ -3,46 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using Unity.Mathematics;
 
 [CreateAssetMenu(fileName = "GameData", menuName = "Data/GameData", order = 1)]
 public class GameData : ScriptableObject
 {
     [Header("Float & Int")]
-    [SerializeField] private float totalMoney; //################## TOTAL MONEY
-    public float TotalMoney
+    [SerializeField] private int currentScore;
+    public int CurrentScore
     {
-        get { return totalMoney; }
+        get { return currentScore; }
         set
         {
-            if (value < 0) totalMoney = 0;
-            else totalMoney = value;
+            if (value < 0) currentScore = 0;
+            else currentScore = value;
         }
     }
 
-    [HorizontalLine]
-    public float deneme;
+    [SerializeField] private float multiplierByScore;
+    public float MultiplierByScore
+    {
+        get
+        {
+            float normalizedValue = Mathf.InverseLerp(0, 5000, CurrentScore);
+            multiplierByScore = Mathf.Lerp(1f, 0.5f, normalizedValue);
+            return multiplierByScore;
+        }
+        set
+        {
+            multiplierByScore = value;
+        }
+    }
 
+    [SerializeField] private float dotSpeedMultiplier;
+    public float DotSpeedMultiplier
+    {
+        get { return dotSpeedMultiplier; }
+        set
+        {
+            if (value < 0.5f) dotSpeedMultiplier = 0.5f;
+            else if (value > 2.5f) dotSpeedMultiplier = 2.5f;
+            else dotSpeedMultiplier = value;
+        }
+    }
+
+    [SerializeField] private int highScore;
+    public int HighScore
+    {
+        get
+        {
+            if (currentScore > highScore)
+            {
+                highScore = currentScore;
+                return highScore;
+            }
+            else
+            {
+                return highScore;
+            }
+        }
+        set
+        {
+            highScore = value;
+        }
+    }
 
 
     [Button]
-    void ResetData()
+    public void ResetData()
     {
-
+        CurrentScore = 0;
+        MultiplierByScore = 1;
+        DotSpeedMultiplier = 1;
     }
-
-    [Button]
-    void FullSource()
-    {
-        TotalMoney = 10000f;
-    }
-
-
-    [Button]
-    void ClearPlayerPrefs()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-
 
     void ResetList<T>(List<T> list)
     {
@@ -51,11 +84,4 @@ public class GameData : ScriptableObject
             list[i] = default(T);
         }
     }
-
-}
-
-[System.Serializable]
-public class Levels
-{
-
 }

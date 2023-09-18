@@ -16,7 +16,8 @@ public enum DotType
 public enum ParticleType
 {
     Blop,
-    Explode
+    Explode,
+    EarnScore
 }
 
 

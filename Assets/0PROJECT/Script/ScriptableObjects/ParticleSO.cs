@@ -5,5 +5,6 @@ public class ParticleSO : ScriptableObject
 {
     public GameObject BlopParticle;
     public GameObject ExplodeParticle;
+    public GameObject EarnScoreParticle;
 
 }

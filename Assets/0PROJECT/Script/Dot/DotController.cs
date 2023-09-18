@@ -116,17 +116,28 @@ public class DotController : Singleton<DotController>
         }
         else
         {
-            if (selectedDot != AllConnectedDots[^1])
+            if (AllConnectedDots.IndexOf(selectedDot) < AllConnectedDots.Count - 2 && AllConnectedDots.Count >= 3)
             {
+                float connectionLenght = 0;
+                int connectedDot = 0;
                 int index = AllConnectedDots.IndexOf(selectedDot);
+
                 for (int i = index; i < AllConnectedDots.Count; i++)
                 {
                     EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
+
+                    connectedDot++;
+                    if (i < AllConnectedDots.Count - 1)
+                        connectionLenght += Vector2.Distance(AllConnectedDots[i].transform.position, AllConnectedDots[i + 1].transform.position);
                 }
+
+                EventManager.Broadcast(GameEvent.OnScore, connectionLenght * connectedDot * 2f, AllConnectedDots[^1]);
 
                 for (int i = AllConnectedDots.Count - 1; i >= index; i--)
                 {
-                    AllConnectedDots.RemoveAt(i);
+                    var dot = AllConnectedDots[i];
+                    AllConnectedDots.Remove(dot);
+                    AllDotsInScene.Remove(dot);
                 }
 
             }

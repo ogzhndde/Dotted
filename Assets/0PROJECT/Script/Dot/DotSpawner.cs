@@ -5,16 +5,40 @@ using UnityEngine;
 
 public class DotSpawner : Singleton<DotSpawner>
 {
+    [SerializeField] GameData data;
 
+    [SerializeField] private float _defaultTimeToSpawn = 2f;
 
-
-    void SpawnNewDot()
+    public static void SpawnDot()
     {
-        DotFactory.SpawnDot(DotType.Standart, GetRandomPointInFOV());
+        DotType dotType = Random.value > 0.85f ? DotType.TimeBomb : DotType.Standart;
+        DotFactory.SpawnDot(dotType, GetRandomPointInFOV());
+    }
+
+    private IEnumerator SpawnDotByTime()
+    {
+        float elapsedTime = 0f;
+        float spawnTimer = _defaultTimeToSpawn * data.MultiplierByScore / SpawnMultiplierSpeedByDotCount();
+
+        while (elapsedTime < spawnTimer)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        SpawnDot();
+        StartCoroutine(SpawnDotByTime());
+    }
+
+    float SpawnMultiplierSpeedByDotCount()
+    {
+        float normalizedMultiplier = Mathf.InverseLerp(0, 10, DotController.Instance.AllDotsInScene.Count);
+        float value = Mathf.Lerp(5f, 1f, normalizedMultiplier);
+        return value;
     }
 
 
-    public Vector2 GetRandomPointInFOV()
+    public static Vector2 GetRandomPointInFOV()
     {
         Camera mainCamera = Camera.main;
 
@@ -43,7 +67,9 @@ public class DotSpawner : Singleton<DotSpawner>
     {
         for (int i = 0; i < 10; i++)
         {
-            SpawnNewDot();
+            SpawnDot();
         }
+
+        StartCoroutine(SpawnDotByTime());
     }
 }

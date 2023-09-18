@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlopParticle: {fileID: 0}
   ExplodeParticle: {fileID: 0}
+  EarnScoreParticle: {fileID: 2340533881137593301, guid: 35dca9571535aab42b4dd248a25a8e4a, type: 3}

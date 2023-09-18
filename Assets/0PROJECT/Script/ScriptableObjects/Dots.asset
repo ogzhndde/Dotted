@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Dots
   m_EditorClassIdentifier: 
   DotStandart: {fileID: 5710058907093355770, guid: b0bffaa8a763f6648af2a3a4c4fb73b3, type: 3}
-  DotTimeBomb: {fileID: 0}
+  DotTimeBomb: {fileID: 3831220796505242252, guid: 0eac3a5b86db1564d8a2f74587f386ca, type: 3}

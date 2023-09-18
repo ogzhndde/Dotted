@@ -5,14 +5,22 @@ using UnityEngine;
 public class DotStandart : DotAbstract
 {
 
+    void Awake()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        anim = GetComponent<Animator>();
+    }
+
     private void Update()
     {
+        Move();
         DrawLine();
-        // SendRaycast();
     }
 
     private void OnMouseEnter()
     {
+        if (GameManager.Instance._gameFail) return;
+        
         EventManager.Broadcast(GameEvent.OnConnectDot, gameObject);
     }
 
@@ -22,12 +30,10 @@ public class DotStandart : DotAbstract
     private void OnEnable()
     {
         //Appear Process
-        lineRenderer = GetComponent<LineRenderer>();
-        anim = GetComponent<Animator>();
-        anim.SetTrigger("DotAppear");
 
+        anim.SetTrigger("DotAppear");
         TargetMovePoint = transform.position;
-        Move();
+        // Move();
 
         //Events
         EventManager.AddHandler(GameEvent.OnClosedConnection, OnClosedConnection);
