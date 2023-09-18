@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using ParticleFactoryStatic;
 using UnityEngine;
 
+/// <summary>   
+/// The class that holds the methods of timebomb dots.
+/// </summary>
 public class DotTimeBomb : DotAbstract, ITimeBomb
 {
     private const float BombCooldown = 4f;

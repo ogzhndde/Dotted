@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum GamePhase
-{
-    NormalPhase
-}
-
+/// <summary>   
+/// Keeps all the enum types in the game in one class.
+/// </summary>
 public enum DotType
 {
     Standart,

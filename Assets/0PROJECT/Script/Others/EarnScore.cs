@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>   
+/// The class that controls the score earned
+/// </summary>
 public class EarnScore : MonoBehaviour
 {
     private TextMeshPro TMP_EarnAmount => GetComponent<TextMeshPro>();

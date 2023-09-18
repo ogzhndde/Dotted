@@ -1,8 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using System.Linq;
+
+/// <summary>   
+/// Class that contains the basic methods of all dots created.
+/// </summary>
 
 public abstract class DotAbstract : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public abstract class DotAbstract : MonoBehaviour
     protected virtual void Move()
     {
         if (GameManager.Instance._gameFail) return;
-        
+
         transform.position = Vector2.MoveTowards(transform.position, TargetMovePoint, Time.deltaTime * CurrentMoveSpeed);
 
         if (Vector2.Distance(transform.position, TargetMovePoint) < 0.1f)

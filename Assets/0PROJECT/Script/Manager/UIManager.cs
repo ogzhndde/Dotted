@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using ParticleFactoryStatic;
 using TMPro;
 using UnityEngine;
@@ -94,6 +91,8 @@ public class UIManager : Singleton<UIManager>
 
     private void OnFinish()
     {
+        SaveManager.SaveData(data);
+
         Anim_FailPanel.SetTrigger("_gameFail");
     }
 

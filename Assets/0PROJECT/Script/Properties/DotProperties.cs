@@ -7,8 +7,4 @@ using UnityEngine;
 public abstract class DotProperties
 {
     public abstract void SpawnDot(DotType dotType,Vector2 spawnPosition);
-
-    
-    
-    
 }

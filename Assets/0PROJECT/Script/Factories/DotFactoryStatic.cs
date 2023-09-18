@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 /// <summary>
 /// The class that produces all dots that can be produced.
-/// There is a main production class called ParticleFactory, and it provides the production of particles where necessary by pulling the specific data of the particle types.
+/// There is a main production class called DotFactory, and it provides the production of dots where necessary by pulling the specific data of the dot types.
 /// </summary>
 
 namespace DotFactoryStatic
@@ -43,6 +43,7 @@ namespace DotFactoryStatic
         public override void SpawnDot(DotType dotType, Vector2 spawnPosition)
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotStandart, spawnPosition, Quaternion.identity);
+            
             spawnedDot.GetComponent<DotAbstract>().ResetDotProperties();
             DotController.Instance.AllDotsInScene.Add(spawnedDot);
         }
@@ -55,6 +56,7 @@ namespace DotFactoryStatic
         public override void SpawnDot(DotType dotType, Vector2 spawnPosition)
         {
             var spawnedDot = ObjectPool.SpawnObjects(manager.DotData.DotTimeBomb, spawnPosition, Quaternion.identity);
+
             spawnedDot.GetComponent<DotAbstract>().ResetDotProperties();
             DotController.Instance.AllDotsInScene.Add(spawnedDot);
         }

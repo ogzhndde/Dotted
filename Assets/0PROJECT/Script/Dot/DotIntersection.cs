@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>   
+/// Class that controls the intersection of given points
+/// </summary>
 public class DotIntersection
 {
     public static bool AreLinesIntersecting(out Vector3 intersection, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4)

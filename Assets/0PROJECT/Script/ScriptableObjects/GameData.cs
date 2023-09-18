@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using NaughtyAttributes;
-using Unity.Mathematics;
 
 [CreateAssetMenu(fileName = "GameData", menuName = "Data/GameData", order = 1)]
 public class GameData : ScriptableObject
 {
-    [Header("Float & Int")]
+    #region CurrentScore
     [SerializeField] private int currentScore;
     public int CurrentScore
     {
@@ -19,7 +15,10 @@ public class GameData : ScriptableObject
             else currentScore = value;
         }
     }
+    #endregion
+    [Space(10)]
 
+    #region MultiplierByScore
     [SerializeField] private float multiplierByScore;
     public float MultiplierByScore
     {
@@ -34,7 +33,10 @@ public class GameData : ScriptableObject
             multiplierByScore = value;
         }
     }
+    #endregion
+    [Space(10)]
 
+    #region DotSpeedMultiplier
     [SerializeField] private float dotSpeedMultiplier;
     public float DotSpeedMultiplier
     {
@@ -46,7 +48,10 @@ public class GameData : ScriptableObject
             else dotSpeedMultiplier = value;
         }
     }
+    #endregion
+    [Space(10)]
 
+    #region HighScore
     [SerializeField] private int highScore;
     public int HighScore
     {
@@ -67,6 +72,7 @@ public class GameData : ScriptableObject
             highScore = value;
         }
     }
+    #endregion
 
 
     [Button]
@@ -75,13 +81,5 @@ public class GameData : ScriptableObject
         CurrentScore = 0;
         MultiplierByScore = 1;
         DotSpeedMultiplier = 1;
-    }
-
-    void ResetList<T>(List<T> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            list[i] = default(T);
-        }
     }
 }

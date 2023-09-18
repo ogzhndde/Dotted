@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using DotFactoryStatic;
 using ParticleFactoryStatic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>   
+/// The class that holds all the dots in the scene, controls their connections and checks the intersection. 
+/// In short, the class that controls all dots in the scene.
+/// </summary>
 public class DotController : Singleton<DotController>
 {
     GameManager manager;

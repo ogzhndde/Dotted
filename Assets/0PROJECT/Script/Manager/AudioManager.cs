@@ -1,8 +1,8 @@
-// using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>   
+/// The class that controls all sound events in the game.
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     public AudioSource audioPlay;

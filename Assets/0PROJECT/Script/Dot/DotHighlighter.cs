@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
+/// <summary>   
+/// Object indicating the currently selected dot.
+/// </summary>
 public class DotHighlighter : MonoBehaviour
 {
     DotController dotController;

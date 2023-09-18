@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+/// <summary>   
+/// Class that controls camera movements
+/// </summary>
 public class CameraMovement : MonoBehaviour
 {
     void SetNewPos(Vector3 camPos)

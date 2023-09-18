@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using DotFactoryStatic;
 using UnityEngine;
 
+/// <summary>   
+/// Class that controls dot spawning.
+/// </summary>
 public class DotSpawner : Singleton<DotSpawner>
 {
     [SerializeField] GameData data;

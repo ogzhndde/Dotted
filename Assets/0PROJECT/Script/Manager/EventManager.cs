@@ -1,6 +1,16 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// The class in which all the events used in the game are controlled.
+/// All events in the game are defined under the GameEvent enum. Then, in the class where you want these events to be used, definition is made via enum.
+/// There are 3 main methods: AddHandler, RemoveHandler and Broadcast.
+/// AddHandler: The method in which the event is assigned and added to the dictionary.
+/// RemoveHandler: A method that removes the defined event from the dictionary if the object becomes inactive.
+/// Broadcast: The method you use where you want the event to run.
+/// Different overloads of these are also defined in the manager. 
+/// If you want to send an event with a variable, you can use those overloads.
+/// </summary>
 public enum GameEvent
 {
     OnStart,

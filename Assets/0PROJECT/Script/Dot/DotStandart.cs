@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>   
+/// The class that holds the methods of our standard dots.
+/// </summary>
 public class DotStandart : DotAbstract
 {
-
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();

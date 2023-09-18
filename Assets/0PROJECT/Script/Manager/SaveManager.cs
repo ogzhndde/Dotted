@@ -1,6 +1,5 @@
 using System.IO;
 using UnityEngine;
-
 public class SaveManager
 {
     public static void SaveData(GameData gameData)
