@@ -17,7 +17,8 @@ public enum ParticleType
 {
     Blop,
     Explode,
-    EarnScore
+    EarnScore,
+    Intersection
 }
 
 

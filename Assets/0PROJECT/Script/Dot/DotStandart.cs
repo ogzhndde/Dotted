@@ -46,6 +46,7 @@ public class DotStandart : DotAbstract
 
     private void OnClosedConnection(object dot)
     {
+        if(GameManager.Instance._gameFail) return;
         GameObject targetDot = (GameObject)dot;
 
         if (ConnectedDots.Contains(targetDot.transform))

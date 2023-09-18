@@ -8,6 +8,8 @@ public enum GameEvent
     OnConnectDot,
     OnClosedConnection,
     OnScore,
+    OnLineIntersection,
+    OnBombExplode,
 
 
     //SOUND EVENTS

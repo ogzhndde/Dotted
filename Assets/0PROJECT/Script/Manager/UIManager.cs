@@ -24,6 +24,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button BTN_SpeedDown;
     [SerializeField] private Button BTN_AddDot;
     [SerializeField] private Button BTN_Restart;
+    [SerializeField] private Button BTN_Pause;
 
     [Space(15)]
     [Header("Texts")]
@@ -65,6 +66,10 @@ public class UIManager : Singleton<UIManager>
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    void ButtonPause()
+    {
+        Time.timeScale = Time.timeScale == 1 ? 0 : 1;
+    }
 
     //########################################    EVENTS    ###################################################################
 
@@ -75,6 +80,7 @@ public class UIManager : Singleton<UIManager>
         BTN_SpeedDown.onClick.AddListener(() => ButtonSpeed(false));
         BTN_AddDot.onClick.AddListener(ButtonAddDot);
         BTN_Restart.onClick.AddListener(ButtonRestart);
+        BTN_Pause.onClick.AddListener(ButtonPause);
 
         EventManager.AddHandler(GameEvent.OnScore, OnScore);
         EventManager.AddHandler(GameEvent.OnFinish, OnFinish);

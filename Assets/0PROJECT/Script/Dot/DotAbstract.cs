@@ -15,6 +15,8 @@ public abstract class DotAbstract : MonoBehaviour
 
     protected virtual void Move()
     {
+        if (GameManager.Instance._gameFail) return;
+        
         transform.position = Vector2.MoveTowards(transform.position, TargetMovePoint, Time.deltaTime * CurrentMoveSpeed);
 
         if (Vector2.Distance(transform.position, TargetMovePoint) < 0.1f)
@@ -31,7 +33,7 @@ public abstract class DotAbstract : MonoBehaviour
     {
         GameData data = GameManager.Instance.data;
         var speedByDistance = Random.Range(0.1f, 0.3f);
-        return speedByDistance /data.MultiplierByScore * data.DotSpeedMultiplier;
+        return speedByDistance / data.MultiplierByScore * data.DotSpeedMultiplier;
     }
 
     Vector3[] ConnectionPoints()

@@ -18,6 +18,7 @@ namespace ParticleFactoryStatic
         {
             { ParticleType.Blop, () => new ParticleBlop() },
             { ParticleType.EarnScore, () => new ParticleScore() },
+            { ParticleType.Intersection, () => new ParticleIntersection() },
         };
 
         //The class in which particles are spawned.
@@ -61,6 +62,18 @@ namespace ParticleFactoryStatic
 
             spawnedParticle.GetComponent<EarnScore>().EarnAmount = scoreValue;
             spawnedParticle.GetComponent<EarnScore>().SetValues();
+        }
+    }
+    
+    public class ParticleIntersection : ParticleProperties
+    {
+        GameManager manager;
+
+        public override void SpawnParticle(ParticleType particleType, Vector3 spawnPosition, float scoreValue)
+        {
+            manager = GameManager.Instance;
+
+            var spawnedParticle = ObjectPool.SpawnObjects(manager.ParticleData.Intersection, spawnPosition, Quaternion.identity, PoolType.ParticleSystem);
         }
     }
 }

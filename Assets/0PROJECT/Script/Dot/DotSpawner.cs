@@ -11,6 +11,8 @@ public class DotSpawner : Singleton<DotSpawner>
 
     public static void SpawnDot()
     {
+        if(GameManager.Instance._gameFail) return;
+        
         DotType dotType = Random.value > 0.85f ? DotType.TimeBomb : DotType.Standart;
         DotFactory.SpawnDot(dotType, GetRandomPointInFOV());
     }

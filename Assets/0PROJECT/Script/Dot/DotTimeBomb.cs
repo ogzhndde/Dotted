@@ -24,6 +24,7 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
     private void OnMouseEnter()
     {
         if (GameManager.Instance._gameFail) return;
+        if (!DotController.Instance._isSwiping) return;
 
         EventManager.Broadcast(GameEvent.OnConnectDot, gameObject);
         BombTriggered();
@@ -49,6 +50,7 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
             yield return null;
         }
 
+        EventManager.Broadcast(GameEvent.OnBombExplode, transform.position);
         EventManager.Broadcast(GameEvent.OnFinish);
     }
 

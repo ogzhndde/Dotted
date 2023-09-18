@@ -1,11 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using DotFactoryStatic;
+using ParticleFactoryStatic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class DotController : Singleton<DotController>
 {
+    GameManager manager;
+
     public List<GameObject> AllDotsInScene = new List<GameObject>();
     [SerializeField] private List<GameObject> AllConnectedDots = new List<GameObject>();
 
@@ -13,7 +17,12 @@ public class DotController : Singleton<DotController>
 
 
     [Space(15)]
-    [SerializeField] private bool _isSwiping = false;
+    public bool _isSwiping = false;
+
+    void Start()
+    {
+        manager = GameManager.Instance;
+    }
 
     void Update()
     {
@@ -21,7 +30,7 @@ public class DotController : Singleton<DotController>
         SetCurrentDot();
 
         ReorganizeDotConnections();
-        // CheckAnyIntersection();
+        CheckAnyIntersection();
     }
 
 
@@ -38,25 +47,30 @@ public class DotController : Singleton<DotController>
 
     void CheckAnyIntersection()
     {
+        if (manager._gameFail) return;
+        if (AllConnectedDots.Count < 3) return;
 
         int dotCount = AllConnectedDots.Count;
 
         for (int i = 0; i < dotCount - 1; i++)
         {
-            Vector3 p1 = AllConnectedDots[i].transform.position;
-            Vector3 p2 = AllConnectedDots[i + 1].transform.position;
+            Vector2 p1 = AllConnectedDots[i].transform.position;
+            Vector2 p2 = AllConnectedDots[i + 1].transform.position;
 
             for (int j = 0; j < dotCount - 1; j++)
             {
-
-                Vector3 p3 = AllConnectedDots[j].transform.position;
-                Vector3 p4 = AllConnectedDots[j + 1].transform.position;
-                if (p1 != p3)
+                if (j != i)
                 {
+                    Vector2 p3 = AllConnectedDots[j].transform.position;
+                    Vector2 p4 = AllConnectedDots[j + 1].transform.position;
+
                     bool _isIntersect = DotIntersection.AreLinesIntersecting(out Vector3 intersection, p1, p2, p3, p4);
-                    Debug.Log(_isIntersect);
+
                     if (_isIntersect)
                     {
+                        EventManager.Broadcast(GameEvent.OnFinish);
+                        EventManager.Broadcast(GameEvent.OnLineIntersection, intersection);
+                        ParticleFactory.SpawnParticle(ParticleType.Intersection, intersection);
                         return;
                     }
                 }
@@ -91,6 +105,34 @@ public class DotController : Singleton<DotController>
         }
     }
 
+    private IEnumerator ClosedConnectionProcess(GameObject selectedDot)
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        float connectionLenght = 0;
+        int connectedDot = 0;
+        int index = AllConnectedDots.IndexOf(selectedDot);
+
+        for (int i = index; i < AllConnectedDots.Count; i++)
+        {
+            EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
+
+            connectedDot++;
+            if (i < AllConnectedDots.Count - 1)
+                connectionLenght += Vector2.Distance(AllConnectedDots[i].transform.position, AllConnectedDots[i + 1].transform.position);
+        }
+
+        //Add score based on the number and length of connections
+        EventManager.Broadcast(GameEvent.OnScore, connectionLenght * connectedDot * 2f, selectedDot);
+
+        for (int i = AllConnectedDots.Count - 1; i >= index; i--)
+        {
+            var dot = AllConnectedDots[i];
+            AllConnectedDots.Remove(dot);
+            AllDotsInScene.Remove(dot);
+        }
+    }
+
 
     //########################################    EVENTS    ###################################################################
 
@@ -118,28 +160,8 @@ public class DotController : Singleton<DotController>
         {
             if (AllConnectedDots.IndexOf(selectedDot) < AllConnectedDots.Count - 2 && AllConnectedDots.Count >= 3)
             {
-                float connectionLenght = 0;
-                int connectedDot = 0;
-                int index = AllConnectedDots.IndexOf(selectedDot);
-
-                for (int i = index; i < AllConnectedDots.Count; i++)
-                {
-                    EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
-
-                    connectedDot++;
-                    if (i < AllConnectedDots.Count - 1)
-                        connectionLenght += Vector2.Distance(AllConnectedDots[i].transform.position, AllConnectedDots[i + 1].transform.position);
-                }
-
-                EventManager.Broadcast(GameEvent.OnScore, connectionLenght * connectedDot * 2f, AllConnectedDots[^1]);
-
-                for (int i = AllConnectedDots.Count - 1; i >= index; i--)
-                {
-                    var dot = AllConnectedDots[i];
-                    AllConnectedDots.Remove(dot);
-                    AllDotsInScene.Remove(dot);
-                }
-
+                AllConnectedDots.Add(selectedDot);
+                StartCoroutine(ClosedConnectionProcess(selectedDot));
             }
 
         }

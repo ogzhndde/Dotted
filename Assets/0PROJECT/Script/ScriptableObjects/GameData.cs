@@ -25,7 +25,7 @@ public class GameData : ScriptableObject
     {
         get
         {
-            float normalizedValue = Mathf.InverseLerp(0, 5000, CurrentScore);
+            float normalizedValue = Mathf.InverseLerp(0, 3500, CurrentScore);
             multiplierByScore = Mathf.Lerp(1f, 0.5f, normalizedValue);
             return multiplierByScore;
         }
