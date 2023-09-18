@@ -8,12 +8,14 @@ using UnityEngine;
 public class DotTimeBomb : DotAbstract, ITimeBomb
 {
     private const float BombCooldown = 4f;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private Gradient colorGradient;
     [SerializeField] private bool _isBombTriggered = false;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         lineRenderer = GetComponent<LineRenderer>();
         anim = GetComponent<Animator>();
     }
@@ -22,6 +24,7 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
     {
         Move();
         DrawLine();
+        CheckAudioSource();
     }
 
     private void OnMouseEnter()
@@ -33,6 +36,7 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
         BombTriggered();
     }
 
+    //Start timer when dot triggers
     public void BombTriggered()
     {
         if (_isBombTriggered) return;
@@ -41,6 +45,12 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
         StartCoroutine(BombTimerCooldown());
     }
 
+    void CheckAudioSource()
+    {
+        audioSource.enabled = _isBombTriggered;
+    }
+
+    //Timer Coroutine
     IEnumerator BombTimerCooldown()
     {
         float elapsedTime = 0f;
@@ -53,9 +63,11 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
             yield return null;
         }
 
+        //Dot explode and game fail
         EventManager.Broadcast(GameEvent.OnBombExplode, transform.position);
         EventManager.Broadcast(GameEvent.OnFinish);
         ParticleFactory.SpawnParticle(ParticleType.Explode, transform.position);
+        _isBombTriggered = false;
     }
 
 
@@ -88,6 +100,4 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
         StopCoroutine(BombTimerCooldown());
         ExplodeDot();
     }
-
-
 }

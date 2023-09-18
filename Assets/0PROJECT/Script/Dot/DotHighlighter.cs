@@ -18,13 +18,14 @@ public class DotHighlighter : MonoBehaviour
         MoveToCurrentDot();
     }
 
+    //Move the highlighter to current dot
     private void MoveToCurrentDot()
     {
         if (dotController.CurrentDot)
-            // transform.position = Vector3.Lerp(transform.position, dotController.CurrentDot.transform.position, Time.deltaTime * 25f);
             transform.position = Vector3.MoveTowards(transform.position, dotController.CurrentDot.transform.position, Time.deltaTime * 50f);
     }
 
+    //If there is no current dot, make it unvisible
     void ActivationCheck()
     {
         GetComponent<Renderer>().enabled = dotController.CurrentDot ? true : false;

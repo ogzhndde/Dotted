@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class CameraMovement : MonoBehaviour
 {
+    //Move camera to target point when game fail
     void SetNewPos(Vector3 camPos)
     {
         float x = camPos.x;
@@ -16,6 +17,7 @@ public class CameraMovement : MonoBehaviour
         transform.DOMove(newPos, 0.5f).SetEase(Ease.OutExpo);
         DOTween.To(x => GetComponent<Camera>().orthographicSize = x, GetComponent<Camera>().orthographicSize, 4, 0.5f);
     }
+
     //########################################    EVENTS    ###################################################################
 
     private void OnEnable()
@@ -32,12 +34,13 @@ public class CameraMovement : MonoBehaviour
 
     private void OnLineIntersection(object value)
     {
-        Vector3 camPos = (Vector3)value;
+        var camPos = (Vector3)value;
         SetNewPos(camPos);
     }
+
     private void OnBombExplode(object value)
     {
-        Vector3 camPos = (Vector3)value;
+        var camPos = (Vector3)value;
         SetNewPos(camPos);
     }
 }

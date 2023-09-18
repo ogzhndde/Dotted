@@ -30,10 +30,8 @@ public class DotStandart : DotAbstract
     private void OnEnable()
     {
         //Appear Process
-
         anim.SetTrigger("DotAppear");
         TargetMovePoint = transform.position;
-        // Move();
 
         //Events
         EventManager.AddHandler(GameEvent.OnClosedConnection, OnClosedConnection);
@@ -47,6 +45,7 @@ public class DotStandart : DotAbstract
     private void OnClosedConnection(object dot)
     {
         if(GameManager.Instance._gameFail) return;
+
         GameObject targetDot = (GameObject)dot;
 
         if (ConnectedDots.Contains(targetDot.transform))

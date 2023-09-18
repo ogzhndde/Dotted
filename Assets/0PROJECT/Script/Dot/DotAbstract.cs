@@ -14,6 +14,7 @@ public abstract class DotAbstract : MonoBehaviour
     protected Vector2 TargetMovePoint;
     protected float CurrentMoveSpeed;
 
+    //Make the dot moves to target
     protected virtual void Move()
     {
         if (GameManager.Instance._gameFail) return;
@@ -30,6 +31,7 @@ public abstract class DotAbstract : MonoBehaviour
         CurrentMoveSpeed = MoveSpeed();
     }
 
+    //Set movement speed based on score and other factors
     float MoveSpeed()
     {
         GameData data = GameManager.Instance.data;
@@ -37,36 +39,35 @@ public abstract class DotAbstract : MonoBehaviour
         return speedByDistance / data.MultiplierByScore * data.DotSpeedMultiplier;
     }
 
+    //Check other dots that the dot connects to
     Vector3[] ConnectionPoints()
     {
         List<Vector3> connectionArray = new List<Vector3>();
         for (int i = 0; i < ConnectedDots.Count; i++)
         {
-
             connectionArray.Add(transform.position);
             connectionArray.Add(ConnectedDots[i].position);
-
         }
 
         return connectionArray.ToArray();
     }
 
+    //Draw line between connections with linerenderer
     protected virtual void DrawLine()
     {
         lineRenderer.positionCount = ConnectedDots.Count * 2;
         lineRenderer.SetPositions(ConnectionPoints());
     }
 
-
-
+    //Disable dot when creating a closed connection
     protected virtual void ExplodeDot()
     {
         ObjectPool.ReturnObjectToPool(gameObject);
     }
 
+    //Reset dot values when send object to pool
     public virtual void ResetDotProperties()
     {
-        // DOTween.Kill(this.gameObject);
         ConnectedDots.Clear();
         lineRenderer.positionCount = 0;
     }

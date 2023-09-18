@@ -47,6 +47,7 @@ public class DotController : Singleton<DotController>
         }
     }
 
+    //Check the intersection of all interconnected dots
     void CheckAnyIntersection()
     {
         if (manager._gameFail) return;
@@ -56,6 +57,7 @@ public class DotController : Singleton<DotController>
 
         for (int i = 0; i < dotCount - 1; i++)
         {
+            //Get start dot and its connection
             Vector2 p1 = AllConnectedDots[i].transform.position;
             Vector2 p2 = AllConnectedDots[i + 1].transform.position;
 
@@ -63,9 +65,11 @@ public class DotController : Singleton<DotController>
             {
                 if (j != i)
                 {
+                    //Get other dots and their connections
                     Vector2 p3 = AllConnectedDots[j].transform.position;
                     Vector2 p4 = AllConnectedDots[j + 1].transform.position;
 
+                    //Check interrupt status
                     bool _isIntersect = DotIntersection.AreLinesIntersecting(out Vector3 intersection, p1, p2, p3, p4);
 
                     if (_isIntersect)
@@ -80,13 +84,13 @@ public class DotController : Singleton<DotController>
         }
     }
 
+    //Check the user is swiping or not
     void SwipingCheck()
     {
         if (Input.GetMouseButtonDown(0))
         {
             _isSwiping = true;
         }
-
         if (Input.GetMouseButtonUp(0))
         {
             _isSwiping = false;
@@ -96,21 +100,23 @@ public class DotController : Singleton<DotController>
 
     void SetCurrentDot()
     {
-        if (AllConnectedDots.Count > 0)
+        if (AllConnectedDots.Count > 0) //If there is any connection, set last dot as current dot
         {
             CurrentDot = AllConnectedDots[^1];
         }
-        else
+        else //if there is not any connection, set a random point as current dot
         {
             CurrentDot = AllDotsInScene[Random.Range(0, AllDotsInScene.Count)];
             AllConnectedDots.Add(CurrentDot);
         }
     }
 
+
     private IEnumerator ClosedConnectionProcess(GameObject selectedDot)
     {
         yield return new WaitForSeconds(0.15f);
 
+        //Control variables of connection
         float connectionLenght = 0;
         int connectedDot = 0;
         int index = AllConnectedDots.IndexOf(selectedDot);
@@ -120,6 +126,7 @@ public class DotController : Singleton<DotController>
             if (i < AllConnectedDots.Count)
                 EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
 
+            //Check total lenght of connection and connection dots count for score
             connectedDot++;
             if (i < AllConnectedDots.Count - 1)
                 connectionLenght += Vector2.Distance(AllConnectedDots[i].transform.position, AllConnectedDots[i + 1].transform.position);
@@ -128,6 +135,7 @@ public class DotController : Singleton<DotController>
         //Add score based on the number and length of connections
         EventManager.Broadcast(GameEvent.OnScore, connectionLenght * connectedDot * 2f, selectedDot);
 
+        //Clear lists
         for (int i = AllConnectedDots.Count - 1; i >= index; i--)
         {
             var dot = AllConnectedDots[i];
@@ -149,12 +157,14 @@ public class DotController : Singleton<DotController>
         EventManager.RemoveHandler(GameEvent.OnConnectDot, OnConnectDot);
     }
 
+    //Event for connection dot check
     private void OnConnectDot(object value)
     {
         if (!_isSwiping) return;
 
         GameObject selectedDot = (GameObject)value;
 
+        //Add selected dot 
         if (!AllConnectedDots.Contains(selectedDot))
         {
             AllConnectedDots.Add(selectedDot);

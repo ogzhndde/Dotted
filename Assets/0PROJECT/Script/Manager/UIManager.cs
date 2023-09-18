@@ -50,10 +50,12 @@ public class UIManager : Singleton<UIManager>
         bool state = Anim_SettingPanel.GetBool("_isActive");
         Anim_SettingPanel.SetBool("_isActive", !state);
     }
+
     void ButtonSpeed(bool UpDown)
     {
         data.DotSpeedMultiplier += UpDown ? 0.25f : -0.25f;
     }
+
     void ButtonAddDot()
     {
         DotSpawner.SpawnDot();
@@ -63,6 +65,7 @@ public class UIManager : Singleton<UIManager>
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     void ButtonPause()
     {
         Time.timeScale = Time.timeScale == 1 ? 0 : 1;
@@ -72,6 +75,7 @@ public class UIManager : Singleton<UIManager>
 
     private void OnEnable()
     {
+        //Add listeners to buttons
         BTN_PanelActivate.onClick.AddListener(ButtonSettingPanelActivation);
         BTN_SpeedUp.onClick.AddListener(() => ButtonSpeed(true));
         BTN_SpeedDown.onClick.AddListener(() => ButtonSpeed(false));
@@ -79,6 +83,7 @@ public class UIManager : Singleton<UIManager>
         BTN_Restart.onClick.AddListener(ButtonRestart);
         BTN_Pause.onClick.AddListener(ButtonPause);
 
+        //Set Events
         EventManager.AddHandler(GameEvent.OnScore, OnScore);
         EventManager.AddHandler(GameEvent.OnFinish, OnFinish);
     }
@@ -95,7 +100,6 @@ public class UIManager : Singleton<UIManager>
 
         Anim_FailPanel.SetTrigger("_gameFail");
     }
-
 
     private void OnScore(object _scoreAdd, object _lastDot)
     {

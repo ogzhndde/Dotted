@@ -9,11 +9,13 @@ public class AudioManager : MonoBehaviour
     public AudioSource soundPlay;
     
 
+    //All events to check sounds in game
    private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnPlaySound, OnPlaySound);
         EventManager.AddHandler(GameEvent.OnPlaySoundVolume, OnPlaySoundVolume);
         EventManager.AddHandler(GameEvent.OnPlaySoundPitch, OnPlaySoundPitch);
+        EventManager.AddHandler(GameEvent.OnPlaySoundBg, OnPlaySoundBg);
     }
 
     private void OnDisable()
@@ -21,6 +23,7 @@ public class AudioManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlaySound, OnPlaySound);
         EventManager.RemoveHandler(GameEvent.OnPlaySoundVolume, OnPlaySoundVolume);
         EventManager.RemoveHandler(GameEvent.OnPlaySoundPitch, OnPlaySoundPitch);
+        EventManager.RemoveHandler(GameEvent.OnPlaySoundBg, OnPlaySoundBg);
     }
 
 

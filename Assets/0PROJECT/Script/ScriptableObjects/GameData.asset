@@ -15,4 +15,4 @@ MonoBehaviour:
   currentScore: 0
   multiplierByScore: 1
   dotSpeedMultiplier: 1
-  highScore: 935
+  highScore: 0

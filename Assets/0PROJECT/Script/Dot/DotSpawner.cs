@@ -14,8 +14,9 @@ public class DotSpawner : Singleton<DotSpawner>
 
     public static void SpawnDot()
     {
-        if(GameManager.Instance._gameFail) return;
-        
+        if (GameManager.Instance._gameFail) return;
+
+        //Possibility check
         DotType dotType = Random.value > 0.85f ? DotType.TimeBomb : DotType.Standart;
         DotFactory.SpawnDot(dotType, GetRandomPointInFOV());
     }
@@ -23,6 +24,7 @@ public class DotSpawner : Singleton<DotSpawner>
     private IEnumerator SpawnDotByTime()
     {
         float elapsedTime = 0f;
+        //Check spawn time according to variables
         float spawnTimer = _defaultTimeToSpawn * data.MultiplierByScore / SpawnMultiplierSpeedByDotCount();
 
         while (elapsedTime < spawnTimer)
@@ -32,17 +34,19 @@ public class DotSpawner : Singleton<DotSpawner>
         }
 
         SpawnDot();
+        //Loop 
         StartCoroutine(SpawnDotByTime());
     }
 
     float SpawnMultiplierSpeedByDotCount()
     {
+        //If there are fewer than 15 points in the scene, increase the spawn frequency
         float normalizedMultiplier = Mathf.InverseLerp(0, 15, DotController.Instance.AllDotsInScene.Count);
         float value = Mathf.Lerp(5f, 1f, normalizedMultiplier);
         return value;
     }
 
-
+    //Get a random point of field of view of camera
     public static Vector2 GetRandomPointInFOV()
     {
         Camera mainCamera = Camera.main;
