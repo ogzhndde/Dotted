@@ -34,7 +34,7 @@ public class DotSpawner : Singleton<DotSpawner>
 
     float SpawnMultiplierSpeedByDotCount()
     {
-        float normalizedMultiplier = Mathf.InverseLerp(0, 10, DotController.Instance.AllDotsInScene.Count);
+        float normalizedMultiplier = Mathf.InverseLerp(0, 15, DotController.Instance.AllDotsInScene.Count);
         float value = Mathf.Lerp(5f, 1f, normalizedMultiplier);
         return value;
     }
@@ -67,7 +67,7 @@ public class DotSpawner : Singleton<DotSpawner>
 
     private void OnStart()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 15; i++)
         {
             SpawnDot();
         }

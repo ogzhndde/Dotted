@@ -12,7 +12,8 @@ public class CameraMovement : MonoBehaviour
         float z = transform.position.z;
 
         Vector3 newPos = new Vector3(x, y, z);
-        transform.DOMove(newPos, 0.3f).SetEase(Ease.OutExpo);
+        transform.DOMove(newPos, 0.5f).SetEase(Ease.OutExpo);
+        DOTween.To(x => GetComponent<Camera>().orthographicSize = x, GetComponent<Camera>().orthographicSize, 4, 0.5f);
     }
     //########################################    EVENTS    ###################################################################
 

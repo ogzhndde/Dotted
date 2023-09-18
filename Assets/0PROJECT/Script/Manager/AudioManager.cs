@@ -7,13 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource audioPlay;
     public AudioSource soundPlay;
-    float timer;
-
-    private void Awake()
-    {
-        // DontDestroyOnLoad(this.gameObject);
     
-    }
 
    private void OnEnable()
     {
@@ -32,6 +26,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnPlaySound(object value)
     {
+        audioPlay.pitch = 1;
         audioPlay.clip = Resources.Load<AudioClip>((string)value);
         audioPlay.PlayOneShot(audioPlay.clip);
     }
@@ -43,10 +38,10 @@ public class AudioManager : MonoBehaviour
         audioPlay.PlayOneShot(audioPlay.clip);
     }
 
-    private void OnPlaySoundPitch(object value, object volume, object pitch)
+    private void OnPlaySoundPitch(object value, object pitch)
     {
-        audioPlay.volume = (float)volume;
-        audioPlay.pitch = (float)pitch;
+        float pitchValue = (float)pitch;
+        audioPlay.pitch = pitchValue > 2.5f ? 2.5f : pitchValue;
 
         audioPlay.clip = Resources.Load<AudioClip>((string)value);
         audioPlay.PlayOneShot(audioPlay.clip);

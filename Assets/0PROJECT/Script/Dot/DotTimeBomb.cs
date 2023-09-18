@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ParticleFactoryStatic;
 using UnityEngine;
 
 public class DotTimeBomb : DotAbstract, ITimeBomb
@@ -52,6 +53,7 @@ public class DotTimeBomb : DotAbstract, ITimeBomb
 
         EventManager.Broadcast(GameEvent.OnBombExplode, transform.position);
         EventManager.Broadcast(GameEvent.OnFinish);
+        ParticleFactory.SpawnParticle(ParticleType.Explode, transform.position);
     }
 
 

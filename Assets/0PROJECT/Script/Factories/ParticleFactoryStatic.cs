@@ -16,7 +16,7 @@ namespace ParticleFactoryStatic
         //It stores all particle types and production classes in a dictionary.
         private static Dictionary<ParticleType, Func<ParticleProperties>> particleFactories = new Dictionary<ParticleType, Func<ParticleProperties>>
         {
-            { ParticleType.Blop, () => new ParticleBlop() },
+            { ParticleType.Explode, () => new ParticleExplode() },
             { ParticleType.EarnScore, () => new ParticleScore() },
             { ParticleType.Intersection, () => new ParticleIntersection() },
         };
@@ -38,7 +38,7 @@ namespace ParticleFactoryStatic
     }
 
     //All necessary data for particles is drawn from scriptable objects and sent to the factory for production.
-    public class ParticleBlop : ParticleProperties
+    public class ParticleExplode : ParticleProperties
     {
         GameManager manager;
 
@@ -46,7 +46,8 @@ namespace ParticleFactoryStatic
         {
             manager = GameManager.Instance;
 
-            // var spawnedParticle = ObjectPool.SpawnObjects(manager.SO.ParticleData.HappyParticle, spawnPosition, Quaternion.identity, PoolType.ParticleSystem);
+            var spawnedParticle = ObjectPool.SpawnObjects(manager.ParticleData.ExplodeParticle, spawnPosition, Quaternion.identity, PoolType.ParticleSystem);
+            EventManager.Broadcast(GameEvent.OnPlaySound, "SoundBomb");
         }
     }
 
@@ -62,9 +63,10 @@ namespace ParticleFactoryStatic
 
             spawnedParticle.GetComponent<EarnScore>().EarnAmount = scoreValue;
             spawnedParticle.GetComponent<EarnScore>().SetValues();
+            EventManager.Broadcast(GameEvent.OnPlaySound, "SoundScore");
         }
     }
-    
+
     public class ParticleIntersection : ParticleProperties
     {
         GameManager manager;
@@ -74,6 +76,7 @@ namespace ParticleFactoryStatic
             manager = GameManager.Instance;
 
             var spawnedParticle = ObjectPool.SpawnObjects(manager.ParticleData.Intersection, spawnPosition, Quaternion.identity, PoolType.ParticleSystem);
+            EventManager.Broadcast(GameEvent.OnPlaySound, "SoundIntersection");
         }
     }
 }

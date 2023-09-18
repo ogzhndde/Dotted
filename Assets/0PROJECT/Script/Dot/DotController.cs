@@ -115,7 +115,8 @@ public class DotController : Singleton<DotController>
 
         for (int i = index; i < AllConnectedDots.Count; i++)
         {
-            EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
+            if (i < AllConnectedDots.Count)
+                EventManager.Broadcast(GameEvent.OnClosedConnection, AllConnectedDots[i]);
 
             connectedDot++;
             if (i < AllConnectedDots.Count - 1)
@@ -155,6 +156,7 @@ public class DotController : Singleton<DotController>
         if (!AllConnectedDots.Contains(selectedDot))
         {
             AllConnectedDots.Add(selectedDot);
+            EventManager.Broadcast(GameEvent.OnPlaySoundPitch, "SoundPop", 1f + (AllConnectedDots.Count * 0.1f));
         }
         else
         {
